@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { toast } from "sonner";
-import { CSVLink } from "react-csv";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { FaFileExport } from "react-icons/fa6";
-import { LuFileUser } from "react-icons/lu";
+import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
 import { FaSearch } from "react-icons/fa";
+import { LuFileUser } from "react-icons/lu";
+import { toast } from "sonner";
 
 interface NewsLatterItem {
     _id: string;

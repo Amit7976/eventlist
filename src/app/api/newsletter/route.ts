@@ -1,7 +1,6 @@
 import { connectToDatabase } from "@/lib/utils";
-import { NextResponse } from "next/server";
 import NewsletterModel from "@/models/newsletterModel";
-import { User } from "@/models/userModal";
+import { NextRequest, NextResponse } from "next/server";
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +23,7 @@ LoadDb();
 
 
 // GET SUBSCRIBERS DATA
-export async function GET(request: any) {
+export async function GET() {
 
   const subscribers = await NewsletterModel.find({}).sort({ date: -1 });
 
@@ -37,7 +36,7 @@ export async function GET(request: any) {
 
 
 // POST SUBSCRIBER DATA
-export async function POST(request: any) {
+export async function POST(request:NextRequest) {
   try {
     const formData = await request.formData();
     const email = `${formData.get('email')}`;
@@ -52,8 +51,8 @@ export async function POST(request: any) {
     await NewsletterModel.create({ email });
     return NextResponse.json({ success: true, msg: "Subscriber added successfully" }, { status: 201 });
 
-  } catch (error: any) {
-    console.error(`Error Adding Subscriber: ${error.message}`);
+  } catch (error) {
+    console.error(`Error Adding Subscriber: ${(error as Error).message}`);
     return NextResponse.json({ success: false, msg: "Failed to add Subscriber" }, { status: 500 });
   }
 }
@@ -74,7 +73,7 @@ export async function POST(request: any) {
 
 
 /// DELETE SUBSCRIBER
-export async function DELETE(request: any) {
+export async function DELETE(request: NextRequest) {
 
   try {
     const id = request.nextUrl.searchParams.get('id');
@@ -93,8 +92,8 @@ export async function DELETE(request: any) {
 
     return NextResponse.json({ success: true, msg: "Subscriber deleted successfully" });
 
-  } catch (error: any) {
-    console.error(`Error deleting NewsLetter: ${error.message}`);
+  } catch (error) {
+    console.error(`Error deleting NewsLetter: ${(error as Error).message}`);
     return NextResponse.json({ success: false, msg: "Failed to delete Subscriber" }, { status: 500 });
   }
 }

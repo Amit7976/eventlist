@@ -8,14 +8,14 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const schema = z.object({
     email: z.string().email("Enter a valid email address"),
@@ -23,13 +23,21 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-function GetEmail({ redirectLink, event }: any) {
+type Event = {
+    title?: string;
+    url?: string;
+    image?: string;
+    date?: string;
+    location?: string;
+};
+
+function GetEmail({ redirectLink, event }: { redirectLink: string; event: Event }) {
 
     const router = useRouter();
     const {
         register,
         handleSubmit,
-        formState: { errors, isValid, isSubmitting },
+        formState: { errors, isValid },
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         mode: "onChange",

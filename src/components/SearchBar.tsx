@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import Image from "next/image";
+import { Input } from "./ui/input";
 
 const searchSchema = z.object({
     country: z.string().min(2, "Country is required"),
@@ -14,6 +14,30 @@ const searchSchema = z.object({
 });
 
 type SearchInput = z.infer<typeof searchSchema>;
+
+type Event = {
+    title: string;
+    url: string;
+    image: string;
+    date: string;
+    location: string;
+    price: string;
+};
+
+interface SearchBarProps {
+    setResult: (value: { events: Event[] }) => void;
+    city: string;
+    setCity: (val: string) => void;
+    country: string;
+    setCountry: (val: string) => void;
+    setRsCity: (val: string) => void;
+    setRsCountry: (val: string) => void;
+}
+
+interface SearchInputForm {
+    country: string;
+    city: string;
+}
 
 function SearchBar({
     setResult,
@@ -23,16 +47,8 @@ function SearchBar({
     setCountry,
     setRsCity,
     setRsCountry
-}: {
-    setResult: (result: any) => void;
-    city: string;
-    setCity: (val: string) => void;
-    country: string;
-    setCountry: (val: string) => void;
-    setRsCity: (val: string) => void;
-    setRsCountry: (val: string) => void;
-}) {
-    const [loading, setLoading] = useState(false);
+}: SearchBarProps) {
+    const [loading, setLoading] = useState<boolean>(false);
 
     const {
         register,
@@ -49,8 +65,8 @@ function SearchBar({
     });
 
     // Watch for input changes and sync with parent state
-    const watchedCountry = watch("country");
-    const watchedCity = watch("city");
+    const watchedCountry: string = watch("country");
+    const watchedCity: string = watch("city");
 
     useEffect(() => {
         setCountry(watchedCountry);
@@ -69,9 +85,9 @@ function SearchBar({
         setValue("city", city);
     }, [city, setValue]);
 
-    const onSubmit = async (data: SearchInput) => {
+    const onSubmit = async (data: SearchInputForm) => {
         setLoading(true);
-        setResult(null);
+        setResult({ events: [] });
 
         try {
             const res = await fetch(
@@ -131,7 +147,6 @@ function SearchBar({
                 </div>
             </form>
         </>
-
     );
 }
 

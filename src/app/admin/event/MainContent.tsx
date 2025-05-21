@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { toast } from "sonner";
-import { CSVLink } from "react-csv";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
+import { FaSearch } from "react-icons/fa";
 import { FaFileExport } from "react-icons/fa6";
 import { LuFileUser } from "react-icons/lu";
-import { FaSearch } from "react-icons/fa";
+import { toast } from "sonner";
 
 interface EventPersonsItem {
   _id: string;
@@ -195,7 +196,7 @@ function MainContent() {
                           <td className="size-px whitespace-nowrap align-top">
                             <a className="block p-6" href={item.url}>
                               <div className="flex items-center gap-x-4">
-                                <img className="shrink-0 w-20 rounded-lg" src={item.image} alt="Product Image" />
+                                <Image width={100} height={100} className="shrink-0 w-20 rounded-lg" src={item.image} alt="Product Image" />
                                 <div className="min-w-40 lg:min-w-auto">
                                   <span className="block text-sm font-semibold text-gray-800 dark:text-neutral-200 whitespace-break-spaces">{item.title}</span>
                                 </div>

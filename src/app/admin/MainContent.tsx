@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { BsCalendar4Event } from "react-icons/bs";
 import { IoPeopleOutline } from "react-icons/io5";
 import { PiSignOutBold } from "react-icons/pi";
@@ -14,13 +13,7 @@ import { PiSignOutBold } from "react-icons/pi";
 
 
 function MainContent() {
-
-
-    const router = useRouter();
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+   
 
     const handleLogout = async () => {
         if (confirm("Are you sure you want to Logout this account!")) {

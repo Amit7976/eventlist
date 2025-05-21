@@ -1,9 +1,27 @@
-import React from 'react'
 import { TextAnimate } from "@/components/magicui/text-animate";
-import { Input } from './ui/input';
 import SearchBar from './SearchBar';
+import Image from "next/image";
 
-function Hero({ setResult, city, setCity, country, setCountry, setRsCity,setRsCountry }:any) {
+interface HeroProps {
+    setResult: (value: { events: Event[] }) => void;
+    city: string;
+    setCity: (value: string) => void;
+    country: string;
+    setCountry: (value: string) => void;
+    setRsCity: (value: string) => void;
+    setRsCountry: (value: string) => void;
+}
+
+type Event = {
+    title: string;
+    url: string;
+    image: string;
+    date: string;
+    location: string;
+    price: string;
+};
+
+function Hero({ setResult, city, setCity, country, setCountry, setRsCity, setRsCountry }: HeroProps) {
     return (
         <>
             <div className="overflow-hidden">
@@ -30,10 +48,10 @@ function Hero({ setResult, city, setCity, country, setCountry, setRsCity,setRsCo
                             <div className="shrink-0 pb-5 sm:flex sm:pb-0 sm:pe-5">
                                 {/* Avatar Group */}
                                 <div className="flex justify-center -space-x-3">
-                                    <img className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar" />
-                                    <img className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar" />
-                                    <img className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80" alt="Avatar" />
-                                    <img className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar" />
+                                    <Image width={50} height={50} className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar" />
+                                    <Image width={50} height={50} className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar" />
+                                    <Image width={50} height={50} className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80" alt="Avatar" />
+                                    <Image width={50} height={50} className="inline-block size-8 rounded-full ring-2 ring-white dark:ring-neutral-900" src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar" />
                                     <span className="inline-flex items-center justify-center size-8 rounded-full ring-2 ring-white bg-gray-800 dark:bg-neutral-900 dark:ring-neutral-900">
                                         <span className="text-xs font-medium text-white uppercase">7k+</span>
                                     </span>

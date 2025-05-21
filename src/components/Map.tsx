@@ -1,4 +1,3 @@
-import React from 'react';
 
 function Map({ city }: { city: string }) {
     const src = `https://maps.google.com/maps?width=100%&height=600&hl=en&q=${encodeURIComponent(

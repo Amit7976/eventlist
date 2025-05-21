@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { User } from "@/models/userModal";
 import { connectToDatabase } from "@/lib/utils";
+import { User } from "@/models/userModal";
+import { NextRequest, NextResponse } from "next/server";
 
 // POST - Add a new user
 export async function POST(req: NextRequest) {

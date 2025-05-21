@@ -3,14 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { AxiosError } from 'axios';
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuCircleDashed } from "react-icons/lu";
-import { z } from "zod";
-import axios from "axios";
 import { toast } from 'sonner';
+import { z } from "zod";
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,12 +37,13 @@ function Footer() {
     },
   })
 
-  
+
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   // POST SUBSCRIBER EMAIL WHEN SUBMIT THE FORM
+
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
     setLoading(true); // Set loading state to true when form submission starts
 
@@ -57,17 +59,21 @@ function Footer() {
       } else {
         toast("Submission Failed");
       }
-    } catch (error: any) {
-      if (error.response && error.response.status === 409) {
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response && axiosError.response.status === 409) {
         toast("Submission Failed");
       } else {
         toast("An unexpected error occurred");
       }
-      console.error('Error saving FAQ:', error);
+
+      console.error('Error saving newsletter subscription:', axiosError);
     } finally {
       setLoading(false);
     }
   }
+
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

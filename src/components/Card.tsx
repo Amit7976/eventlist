@@ -1,21 +1,24 @@
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { Button } from './ui/button'
+import Image from 'next/image';
+import { useState } from 'react';
 import GetEmail from './GetEmail';
 
 import {
     Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+    DialogTrigger
+} from "@/components/ui/dialog";
 
 
 
 
-function Card({ event }: any) {
+interface Event {
+    title: string;
+    location: string;
+    date: string;
+    image?: string;
+    url: string;
+}
+
+function Card({ event }: { event: Event }) {
 
 
     const [redirectLink, setRedirectLink] = useState('/');

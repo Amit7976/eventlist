@@ -1,13 +1,12 @@
 "use client"
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import { TbLayoutDashboard } from "react-icons/tb";
+import { Button } from '@/components/ui/button';
+import { signOut } from "next-auth/react";
+import Image from 'next/image';
+import Link from 'next/link';
 import { BsCalendar4Event } from "react-icons/bs";
 import { IoPeopleOutline } from "react-icons/io5";
-import { Button } from '@/components/ui/button';
 import { PiSignOutBold } from "react-icons/pi";
-import { signOut } from "next-auth/react";
+import { TbLayoutDashboard } from "react-icons/tb";
 
 
 function Sidebar() {

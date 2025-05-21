@@ -1,19 +1,25 @@
 "use client";
-
-import Header from '@/components/Header/Header';
-import React, { useState, useRef, useEffect } from 'react';
-import MainContent from './MainContent';
-import Footer from '@/components/Footer/Footer';
-import Map from '@/components/Map';
-import Banner from '@/components/Banner';
-import Hero from '@/components/Hero';
-import GetEmail from '@/components/GetEmail';
 import SplashCursor from "@/Animations/SplashCursor/SplashCursor";
+import Banner from '@/components/Banner';
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
+import Hero from '@/components/Hero';
+import Map from '@/components/Map';
+import { useEffect, useRef, useState } from 'react';
+import MainContent from './MainContent';
 
+type Event = {
+  title: string;
+  url: string;
+  image: string;
+  date: string;
+  location: string;
+  price: string;
+};
 
 function Page() {
   const [city, setCity] = useState("Sydney");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<{ events: Event[] }>({ events: [] });
   const [country, setCountry] = useState("Australia");
   const [rsCity, setRsCity] = useState("Sydney");
   const [rsCountry, setRsCountry] = useState("australia");

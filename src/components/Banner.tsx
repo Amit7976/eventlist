@@ -35,7 +35,26 @@ const cities = [
     },
 ];
 
-function Banner({ setCity, setCountry, city, country, setResult, setRsCity, setRsCountry }: any) {
+type Event = {
+    title: string;
+    url: string;
+    image: string;
+    date: string;
+    location: string;
+    price: string;
+};
+
+interface BannerProps {
+    setCity: (city: string) => void;
+    setCountry: (country: string) => void;
+    city: string;
+    country: string;
+    setResult: (value: { events: Event[] }) => void;
+    setRsCity: (city: string) => void;
+    setRsCountry: (country: string) => void;
+}
+
+function Banner({ setCity, setCountry, setResult, setRsCity, setRsCountry }: BannerProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showOverlayIndex, setShowOverlayIndex] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -50,7 +69,7 @@ function Banner({ setCity, setCountry, city, country, setResult, setRsCity, setR
 
     const handleClick = async ({ newCity, newCountry }: { newCity: string; newCountry: string }) => {
         setLoading(true);
-        setResult(null);
+        setResult({ events: [] });
 
         try {
             const res = await fetch(

@@ -1,7 +1,7 @@
 import { auth } from "@/nextAuth/auth";
 import { redirect } from "next/navigation";
-import MainContent from "./MainContent";
 import Sidebar from "../components/Sidebar";
+import MainContent from "./MainContent";
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

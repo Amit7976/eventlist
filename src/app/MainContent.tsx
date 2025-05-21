@@ -1,6 +1,5 @@
 "use client";
 import Card from "@/components/Card";
-import GetEmail from "@/components/GetEmail";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -19,7 +18,7 @@ export default function MainContent({
     rsCity,
     rsCountry
 }: {
-    result: any;
+    result: { events: Event[] };
     rsCity: string;
     rsCountry: string;
 }) {

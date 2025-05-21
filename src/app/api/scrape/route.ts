@@ -97,6 +97,9 @@ async function scrapePage(
     await page.close();
     return events;
   } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
     await page.close();
     return [];
   }

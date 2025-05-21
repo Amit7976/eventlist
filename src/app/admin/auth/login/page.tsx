@@ -1,8 +1,8 @@
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
 import { auth } from '@/nextAuth/auth';
 import { redirect } from 'next/navigation';
 import MainContent from './MainContent';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
