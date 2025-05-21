@@ -24,8 +24,8 @@ const Page = async () => {
   return (
     <div className="grid grid-cols-12 bg-white dark:bg-neutral-800 relative">
       <div className="col-span-12">
-                    <Sidebar />
-        <MainContent session={session} />
+        <Sidebar />
+        <MainContent />
       </div>
     </div>
   );

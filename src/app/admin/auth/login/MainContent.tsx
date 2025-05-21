@@ -33,14 +33,11 @@ const MainContent = async () => {
                 </div>
             </section>
 
-            <section className='w-full gap-6 my-5 mb-2 p-5 pb-0 max-w-7xl mx-auto'>
+            <section className='w-full gap-6 my-5 p-5 pb-0 max-w-7xl mx-auto mb-20'>
                 <LoginForm />
             </section >
 
-            <div className='mt-6'>
-                <p className='w-full text-center'><a href="/auth/candidatePasswordReset/sendForgotPasswordToken" className='font-semibold text-base'>Forget Password?</a></p>
-                <p className='w-full text-center mt-4 text-gray-400'><a href="/auth/register" className='font-medium text-base justify-center flex items-center'>Don&#39;t have a account<span className='font-bold text-orange-500 px-1 underline underline-offset-2 flex items-center gap-0.5 hover:text-gray-500 duration-500'>Create a new account <FaAnglesRight /></span></a></p>
-            </div>
+          
         </>
     )
 }

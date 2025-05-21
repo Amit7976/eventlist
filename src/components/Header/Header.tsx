@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ position, blogpost = false }) => {
                                     <div>
                                         <Link
                                             className="relative flex items-center gap-5 text-base text-black hover:text-gray-600 dark:text-white dark:hover:bg-neutral-800 rounded-sm px-4 py-2 font-semibold w-full"
-                                            href="/blogs"
+                                            href="/"
                                         >
                                             <FaHome className="text-xl" /> Home
                                         </Link>

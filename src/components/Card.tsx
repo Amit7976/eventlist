@@ -66,7 +66,7 @@ function Card({ event }: any) {
                     <div className='opacity-0 group-hover:opacity-100 duration-700 h-full left-0 top-0 bg-black/40 w-full bottom-2 absolute flex items-center justify-center'>
 
                         <Dialog>
-                            <DialogTrigger onClick={() => [setRedirectLink(event.url), setGetEmail(true)]} className='scale-0 group-hover:scale-100 cursor-pointer px-10 h-12 bg-white rounded-lg font-semibold'>
+                            <DialogTrigger onClick={() => [setRedirectLink(event.url), setGetEmail(true)]} className='scale-0 group-hover:scale-100 cursor-pointer px-10 h-12 bg-white dark:bg-black rounded-lg font-semibold'>
                                 Get Tickets
                             </DialogTrigger>
                             {getEmail && <GetEmail redirectLink={redirectLink} event={event} />}

@@ -15,7 +15,7 @@ function Sidebar() {
     const handleLogout = async () => {
         if (confirm("Are you sure you want to Logout this account!")) {
             await signOut({ redirect: false });
-            window.location.replace('/auth/login');
+            window.location.replace('/admin/auth/login');
         }
     };
 

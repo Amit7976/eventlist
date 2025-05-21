@@ -61,17 +61,17 @@ export default function MainContent({
 
     return (
         <>
-            <main className="p-10">
-                <p className="text-5xl font-bold text-gray-500 -mb-10">All Event of</p>
-                <h2 className="capitalize font-semibold text-red-500 text-[10vw]">{rsCity}</h2>
+            <main className="p-5 lg:p-10">
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-500 sm:-mb-10">All Event of</p>
+                <h2 className="capitalize font-semibold text-red-500 text-[20vw]">{rsCity}</h2>
 
-                <div className="grid grid-cols-3 gap-10 mt-20">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10 lg:mt-20">
                     {events.map((event: Event, i: number) => (
                         <Card event={event} key={i} />
                     ))}
                 </div>
 
-                <div className="w-full flex justify-center mt-40">
+                <div className="w-full flex justify-center mt-20 lg:mt-40">
                     {events.length < 100 ? null : (
                         <Button
                             onClick={loadMore}

@@ -7,7 +7,7 @@ function Hero({ setResult, city, setCity, country, setCountry, setRsCity,setRsCo
     return (
         <>
             <div className="overflow-hidden">
-                <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
                     <div className="relative mx-auto max-w-4xl grid space-y-5 sm:space-y-10">
                         {/* Title */}
                         <div className="text-center">

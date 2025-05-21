@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const cities = [
     {
@@ -78,7 +77,7 @@ function Banner({ setCity, setCountry, city, country, setResult, setRsCity, setR
                 </div>
             ) : null}
             <div className="max-w-7xl rounded-3xl h-96 mx-auto mt-10 mb-40 flex gap-3">
-                <div className="flex gap-4 overflow-x-auto px-2">
+                <div className="flex gap-4 overflow-x-auto px-2 flex-nowrap lg:flex-rap overflow-y-scroll lg:overflow-y-auto">
                     {cities.map((city, index) => {
 
                         const isActive = activeIndex === index;
@@ -87,7 +86,7 @@ function Banner({ setCity, setCountry, city, country, setResult, setRsCity, setR
                         return (
                             <div
                                 key={index}
-                                className={`relative overflow-hidden h-96 rounded-2xl duration-500 cursor-pointer ${isActive ? 'w-full' : 'w-1/2'}`}
+                                className={`relative overflow-hidden h-96 rounded-2xl duration-500 cursor-pointer shrink-0 lg:shrink ${isActive ? 'w-2/3 lg:w-full' : 'w-2/3 sm:w-1/2'}`}
                                 onMouseEnter={() => setActiveIndex(index)}
                                 onClick={() => {
                                     setCity(city.title);
@@ -102,13 +101,14 @@ function Banner({ setCity, setCountry, city, country, setResult, setRsCity, setR
                                     height={300}
                                     className="w-full h-full object-cover object-center"
                                 />
-                                <div className={`absolute bottom-0 bg-gradient-to-t from-black/50 to-transparent bg-opacity-50 text-white p-4 w-full h-full flex flex-col justify-end gap-2 transition-opacity duration-500 ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'pointer-event-auto' : 'pointer-event-none'}`}>
+                                <div className={`absolute bottom-0 bg-gradient-to-t from-black /50 to-transparent bg-opacity-50 text-white p-4 w-full h-full flex flex-col justify-end gap-2 transition-opacity duration-500 ${showOverlay ? 'opacity-100' : 'opacity-100 lg:opacity-0'} ${showOverlay ? 'pointer-event-auto' : 'pointer-event-auto lg:pointer-event-none'}`}>
                                     <h3 className="text-3xl font-semibold">{city.title}</h3>
                                     <p className="text-base text-gray-300 font-normal line-clamp-2">
                                         {city.description}
                                     </p>
                                 </div>
                             </div>
+
                         )
                     })}
                 </div>

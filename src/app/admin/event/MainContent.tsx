@@ -72,7 +72,7 @@ function MainContent() {
     <div className="p-8 pl-24 bg-slate-100 dark:bg-neutral-900 min-h-screen">
 
       <div className="pb-6">
-        <h2 className="text-4xl font-bold text-gray-500">Event Interested Persons</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-500">Event Interested Persons</h2>
 
       </div>
       {/* Table Section */}
@@ -196,7 +196,7 @@ function MainContent() {
                             <a className="block p-6" href={item.url}>
                               <div className="flex items-center gap-x-4">
                                 <img className="shrink-0 w-20 rounded-lg" src={item.image} alt="Product Image" />
-                                <div>
+                                <div className="min-w-40 lg:min-w-auto">
                                   <span className="block text-sm font-semibold text-gray-800 dark:text-neutral-200 whitespace-break-spaces">{item.title}</span>
                                 </div>
                               </div>
