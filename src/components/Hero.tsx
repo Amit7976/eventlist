@@ -3,7 +3,7 @@ import { TextAnimate } from "@/components/magicui/text-animate";
 import { Input } from './ui/input';
 import SearchBar from './SearchBar';
 
-function Hero({ setResult, city, setCity, country, setCountry }:any) {
+function Hero({ setResult, city, setCity, country, setCountry, setRsCity,setRsCountry }:any) {
     return (
         <>
             <div className="overflow-hidden">
@@ -51,7 +51,7 @@ function Hero({ setResult, city, setCity, country, setCountry }:any) {
                         {/* End Avatar Group */}
 
                         {/* Form */}
-                        <SearchBar setResult={setResult} city={city} setCity={setCity} country={country} setCountry={setCountry} />
+                        <SearchBar setResult={setResult} city={city} setCity={setCity} country={country} setCountry={setCountry} setRsCity={setRsCity} setRsCountry={setRsCountry} />
                         {/* End Form */}
 
                         {/* SVG Element */}

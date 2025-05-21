@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
 
     const body = await req.json();
-    const { title, url, image, date, location, email, price } = body;
+    const { title, url, image, date, location, email } = body;
 
-    if (!title || !url || !image || !date || !location || !email || !price) {
+    if (!title || !url || !image || !date || !location || !email) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
         { status: 400 }
@@ -23,8 +23,7 @@ export async function POST(req: NextRequest) {
       image,
       date,
       location,
-      email,
-      price,
+      email
     });
 
     await newUser.save();

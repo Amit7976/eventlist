@@ -6,7 +6,7 @@ function Map({ city }: { city: string }) {
     )}&ie=UTF8&t=&z=14&iwloc=B&output=embed`;
 
     return (
-        <div className="relative h-96 w-full bg-gray-300">
+        <div className="relative h-96 mt-40 mb-10 w-full max-w-7xl mx-auto rounded-4xl overflow-hidden bg-gray-300">
             <iframe
                 className="h-full w-full opacity-100"
                 title="map"

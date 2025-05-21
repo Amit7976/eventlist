@@ -1,6 +1,8 @@
 "use client";
 import Card from "@/components/Card";
-import React, { useState, useEffect } from "react";
+import GetEmail from "@/components/GetEmail";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 type Event = {
     title: string;
@@ -11,18 +13,77 @@ type Event = {
     price: string;
 };
 
-export default function MainContent({ result, city }: any) {
+
+export default function MainContent({
+    result,
+    rsCity,
+    rsCountry
+}: {
+    result: any;
+    rsCity: string;
+    rsCountry: string;
+}) {
+    const [events, setEvents] = useState<Event[]>([]);
+    const [page, setPage] = useState(6);
+    const [loading, setLoading] = useState(false);
+
+    // Load initial events from prop once
+    useEffect(() => {
+        if (result?.events?.length) {
+            setEvents(result.events);
+        }
+    }, [result]);
+
+    const loadMore = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(
+                `/api/scrape?country=${encodeURIComponent(rsCountry)}&city=${encodeURIComponent(rsCity)}&page=${page}`
+            );
+            const json = await res.json();
+
+            if (json?.events?.length) {
+                setEvents((prev) => [...prev, ...json.events]);
+                setPage((prev) => prev + 5);
+            }
+        } catch (error) {
+            console.error("Fetch error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (!events.length) return null;
 
 
-    return (result ? (<main className="p-10">
-        <p className="text-5xl font-bold text-gray-500 -mb-10">All Event of</p>
-        <h2 className="capitalize font-semibold text-red-500 text-[10vw]">{city}</h2>
 
-        <div>
-            {result.events.map((event: any, i: any) => (
-                <Card event={event} key={i} />
-            ))}
-        </div>
-    </main>) : null)
 
+
+    return (
+        <>
+            <main className="p-10">
+                <p className="text-5xl font-bold text-gray-500 -mb-10">All Event of</p>
+                <h2 className="capitalize font-semibold text-red-500 text-[10vw]">{rsCity}</h2>
+
+                <div className="grid grid-cols-3 gap-10 mt-20">
+                    {events.map((event: Event, i: number) => (
+                        <Card event={event} key={i} />
+                    ))}
+                </div>
+
+                <div className="w-full flex justify-center mt-40">
+                    {events.length < 100 ? null : (
+                        <Button
+                            onClick={loadMore}
+                            disabled={loading}
+                            className="w-full max-w-7xl h-16 font-semibold text-lg cursor-pointer bg-neutral-700 dark:bg-neutral-300 hover:bg-neutral-900 dark:hover:bg-white hover:shadow-2xl duration-300"
+                        >
+                            {loading ? "Loading..." : "Load More"}
+                        </Button>
+                    )}
+                </div>
+            </main>
+            
+        </>
+    );
 }

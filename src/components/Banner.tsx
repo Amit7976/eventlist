@@ -1,98 +1,123 @@
-"use client"
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-const sampleEvents = [
+const cities = [
     {
-        title: 'Coffee Meetup Jaipur',
-        url: 'https://www.eventbrite.com/e/coffee-meetup-jaipur-tickets-1249281698189?aff=ebdssbdestsearch',
-        image:
-            'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F960751353%2F2235598435203%2F1%2Foriginal.20250214-121803?h=200&w=512&auto=format%2Ccompress&q=75&sharp=10&s=4aa80483668346eda00ffc641b56e3e9',
-        date: 'Sat, Jun 7, 7:00 PM + 3 more',
-        location: 'Stepout Cafe',
+        title: "Sydney",
+        country: "Australia",
+        description: "Discover events in beautiful Sydney",
+        image: "/images/cities/sydney.jpg",
     },
     {
-        title: 'Tech Talk Delhi',
-        url: 'https://www.eventbrite.com/e/tech-talk-delhi-tickets-1249281698190',
-        image:
-            'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1030597043%2F2754305045531%2F1%2Foriginal.20250514-120458?h=200&w=318&auto=format%2Ccompress&q=75&sharp=10&s=b6cf45bebe193b030d2497fe8759b5cf',
-        date: 'Sun, Jun 8, 5:00 PM',
-        location: 'Tech Hub Center',
+        title: "Jaipur",
+        country: "India",
+        description: "Explore heritage and tech events in Jaipur",
+        image: "/images/cities/jaipur.webp",
     },
     {
-        title: 'Startup Meetup Mumbai',
-        url: 'https://www.eventbrite.com/e/startup-meetup-mumbai-tickets-1249281698191',
-        image:
-            'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F916772013%2F313035400695%2F1%2Foriginal.20241213-030129?crop=focalpoint&fit=crop&h=200&w=512&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=c2003e89b6ada368ef95759579d309fb',
-        date: 'Fri, Jun 14, 6:00 PM',
-        location: 'WeWork BKC',
+        title: "New York",
+        country: "NY",
+        description: "Attend top events in NYC",
+        image: "/images/cities/newYork.jpg",
     },
     {
-        title: 'Startup Meetup Mumbai',
-        url: 'https://www.eventbrite.com/e/startup-meetup-mumbai-tickets-1249281698191',
-        image:
-            'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F916772013%2F313035400695%2F1%2Foriginal.20241213-030129?crop=focalpoint&fit=crop&h=200&w=512&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=c2003e89b6ada368ef95759579d309fb',
-        date: 'Fri, Jun 14, 6:00 PM',
-        location: 'WeWork BKC',
+        title: "Mumbai",
+        country: "India",
+        description: "Join vibrant meetups in Mumbai",
+        image: "/images/cities/mumbai.webp",
     },
     {
-        title: 'Design Conf Bengaluru',
-        url: 'https://www.eventbrite.com/e/design-conf-bengaluru-tickets-1249281698192',
-        image:
-            'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1030597043%2F2754305045531%2F1%2Foriginal.20250514-120458?h=200&w=318&auto=format%2Ccompress&q=75&sharp=10&s=b6cf45bebe193b030d2497fe8759b5cf',
-        date: 'Mon, Jun 23, 10:00 AM',
-        location: 'NIMHANS Convention Center',
+        title: "London",
+        country: "UK",
+        description: "What's happening in London?",
+        image: "/images/cities/london.jpeg",
     },
 ];
 
-function Banner({ result }: any) {
+function Banner({ setCity, setCountry, city, country, setResult, setRsCity, setRsCountry }: any) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showOverlayIndex, setShowOverlayIndex] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowOverlayIndex(activeIndex);
         }, 200);
-
         return () => clearTimeout(timer);
     }, [activeIndex]);
 
+
+    const handleClick = async ({ newCity, newCountry }: { newCity: string; newCountry: string }) => {
+        setLoading(true);
+        setResult(null);
+
+        try {
+            const res = await fetch(
+                `/api/scrape?country=${encodeURIComponent(newCountry)}&city=${encodeURIComponent(newCity)}`
+            );
+            const json = await res.json();
+
+            setRsCountry(newCountry);
+            setRsCity(newCity);
+
+            setResult(json);
+        } catch (error) {
+            console.error("Fetch error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
-            <div className='max-w-7xl rounded-3xl h-96 mx-auto mt-10 mb-40 flex gap-3'>
-                {sampleEvents.map((event, index) => {
-                    const isActive = activeIndex === index;
-                    const showOverlay = showOverlayIndex === index && isActive;
+            {loading ? (
+                <div className="h-screen w-screen fixed top-0 z-40 bg-black/30 dark:bg-black/50 flex items-center justify-center select-none">
+                    <Image src={'/images/gif/loader.gif'} width={200} height={200} alt="Loader" className="aspect-square w-20"></Image>
+                </div>
+            ) : null}
+            <div className="max-w-7xl rounded-3xl h-96 mx-auto mt-10 mb-40 flex gap-3">
+                <div className="flex gap-4 overflow-x-auto px-2">
+                    {cities.map((city, index) => {
 
-                    return (
-                        <Link
-                            href={event.url}
-                            key={index}
-                            onMouseEnter={() => setActiveIndex(index)}
-                            className={`relative overflow-hidden h-96 rounded-2xl duration-500 ${isActive ? 'w-full' : 'w-1/2'}`}
-                        >
-                            <Image
-                                src={event.image}
-                                alt={event.title}
-                                className='w-full h-full object-cover'
-                                width={800}
-                                height={800}
-                            />
+                        const isActive = activeIndex === index;
+                        const showOverlay = showOverlayIndex === index && isActive;
 
+                        return (
                             <div
-                                className={`absolute bottom-0 bg-gradient-to-t from-black/50 to-transparent bg-opacity-50 text-white p-4 w-full h-full flex flex-col justify-end gap-2 transition-opacity duration-500 ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'pointer-event-auto' : 'pointer-event-none'}`}
+                                key={index}
+                                className={`relative overflow-hidden h-96 rounded-2xl duration-500 cursor-pointer ${isActive ? 'w-full' : 'w-1/2'}`}
+                                onMouseEnter={() => setActiveIndex(index)}
+                                onClick={() => {
+                                    setCity(city.title);
+                                    setCountry(city.country);
+                                    handleClick({ newCity: city.title, newCountry: city.country })
+                                }}
                             >
-                                <h3 className="text-3xl font-bold line-clamp-2">{event.title}</h3>
-                                <p className="text-base font-semibold">{event.date}</p>
-                                <p className="text-sm text-gray-300 font-semibold line-clamp-1">{event.location}</p>
+                                <Image
+                                    src={city.image}
+                                    alt={city.title}
+                                    width={400}
+                                    height={300}
+                                    className="w-full h-full object-cover object-center"
+                                />
+                                <div className={`absolute bottom-0 bg-gradient-to-t from-black/50 to-transparent bg-opacity-50 text-white p-4 w-full h-full flex flex-col justify-end gap-2 transition-opacity duration-500 ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'pointer-event-auto' : 'pointer-event-none'}`}>
+                                    <h3 className="text-3xl font-semibold">{city.title}</h3>
+                                    <p className="text-base text-gray-300 font-normal line-clamp-2">
+                                        {city.description}
+                                    </p>
+                                </div>
                             </div>
-                        </Link>
-                    );
-                })}
-            </div>
+                        )
+                    })}
+                </div>
+            </div >
         </>
     );
 }
 
 export default Banner;
+
+
+

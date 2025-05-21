@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer, { Browser, Page } from "puppeteer";
+import puppeteer, { Browser } from "puppeteer";
 
 interface Event {
   title: string;
@@ -106,6 +106,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
   const country = searchParams.get("country")?.toLowerCase() ?? "australia";
   const city = searchParams.get("city")?.toLowerCase() ?? "sydney";
+  const page = parseInt(searchParams.get("page") ?? "1");
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -113,16 +114,19 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   });
 
   try {
-    // 1 से 5 pages एक साथ scrape करो
-    const pagesToScrape = [1, 2, 3, 4, 5];
+    let pagesToScrape: number[] = [];
+
+    if (page <= 5) {
+      pagesToScrape = [1, 2, 3, 4, 5];
+    } else {
+      pagesToScrape = [page, page + 1, page + 2, page + 3, page + 4];
+    }
 
     const scrapePromises = pagesToScrape.map((pageNum) =>
       scrapePage(browser, country, city, pageNum)
     );
 
     const results = await Promise.all(scrapePromises);
-
-    // flatten the array of arrays
     const allEvents = results.flat();
 
     await browser.close();
