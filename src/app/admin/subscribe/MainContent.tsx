@@ -68,7 +68,7 @@ function MainContent() {
                 toast.success("User deleted successfully");
                 // Re-fetch updated list after deletion
                 const updated = await axios.get("/api/newsletter");
-                setNewsLatter(updated.data.users || []);
+                setNewsLatter(updated.data.subscribers || []);
             } else {
                 toast.error(res.data.message || "Failed to delete user");
             }
