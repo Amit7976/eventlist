@@ -1,13 +1,5 @@
 "use client";
-
-import {
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle
-} from "@/components/ui/dialog";
+import {DialogClose,DialogContent,DialogDescription,DialogFooter,DialogHeader,DialogTitle} from "@/components/ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,11 +9,24 @@ import { z } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 const schema = z.object({
     email: z.string().email("Enter a valid email address"),
 });
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 type FormData = z.infer<typeof schema>;
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 type Event = {
     title?: string;
@@ -30,6 +35,10 @@ type Event = {
     date?: string;
     location?: string;
 };
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function GetEmail({ redirectLink, event }: { redirectLink: string; event: Event }) {
 
@@ -43,7 +52,15 @@ function GetEmail({ redirectLink, event }: { redirectLink: string; event: Event 
         mode: "onChange",
     });
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     const [loading, setLoading] = useState(false);
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     const onSubmit = async (data: FormData) => {
         setLoading(true);
@@ -63,10 +80,11 @@ function GetEmail({ redirectLink, event }: { redirectLink: string; event: Event 
                 body: JSON.stringify(payload),
             });
 
-            if (res.ok) {
-                toast.success("Ticket request sent successfully!");
-                toast.info("Redirecting....");
+            // -------------------------------------------------------------------------------
 
+            if (res.ok) {
+                toast.info("Redirecting....");
+                toast.success("Ticket request sent successfully!");
                 router.push(redirectLink);
             } else {
                 toast.error("Failed to send request.");
@@ -78,6 +96,10 @@ function GetEmail({ redirectLink, event }: { redirectLink: string; event: Event 
             setLoading(false);
         }
     };
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     return (
         <DialogContent className="sm:max-w-md">

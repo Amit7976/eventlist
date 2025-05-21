@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -9,15 +8,29 @@ import { FaSearch } from "react-icons/fa";
 import { LuFileUser } from "react-icons/lu";
 import { toast } from "sonner";
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 interface NewsLatterItem {
     _id: string;
     email: string;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function MainContent() {
+
     const [newsLatter, setNewsLatter] = useState<NewsLatterItem[]>([]);
     const [filterText, setFilterText] = useState("");
     const [loading, setLoading] = useState(true);
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     useEffect(() => {
         const fetchNewsLatter = async () => {
@@ -34,9 +47,16 @@ function MainContent() {
         fetchNewsLatter();
     }, []);
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     const filteredData = newsLatter.filter((item) =>
         item.email.toLowerCase().includes(filterText.toLowerCase()),
     );
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     const deleteData = async (id: string) => {
@@ -61,23 +81,23 @@ function MainContent() {
     };
 
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     return (
         <div className="p-8 pl-24 bg-slate-100 dark:bg-neutral-900 min-h-screen">
-
             <div className="pb-6">
                 <h2 className="text-4xl font-bold text-gray-500">Subscribers</h2>
-
             </div>
-            {/* Table Section */}
+           
             <div className="w-full">
-                {/* Card */}
                 <div className="flex flex-col">
                     <div className="-m-1.5 overflow-x-auto">
                         <div className="p-1.5 min-w-full inline-block align-middle">
                             <div className="border border-gray-200 rounded-xl shadow-2xs overflow-hidden dark:bg-neutral-900 dark:border-neutral-700">
-                                {/* Header */}
+                              
                                 <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
-                                    {/* Input */}
+                                  
                                     <div className="sm:col-span-1">
                                         <label htmlFor="hs-as-table-product-review-search" className="sr-only">Search</label>
                                         <div className="relative">
@@ -92,7 +112,6 @@ function MainContent() {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* End Input */}
 
                                     <div className="sm:col-span-2 md:grow">
                                         <div className="flex justify-end gap-x-2">
@@ -109,9 +128,7 @@ function MainContent() {
                                         </div>
                                     </div>
                                 </div>
-                                {/* End Header */}
-
-                                {/* Table */}
+                                
                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                                     <thead className="bg-gray-200 dark:bg-neutral-800">
                                         <tr>
@@ -165,16 +182,12 @@ function MainContent() {
                                         )}
                                     </tbody>
                                 </table>
-                                {/* End Table */}
 
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* End Card */}
             </div>
-            {/* End Table Section */}
-
         </div>
     );
 }

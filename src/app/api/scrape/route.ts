@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer, { Browser } from "puppeteer";
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 interface Event {
   title: string;
   url: string;
@@ -8,6 +13,10 @@ interface Event {
   date: string;
   location: string;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function deduplicate(events: Event[]): Event[] {
   const seen = new Set<string>();
@@ -18,6 +27,10 @@ function deduplicate(events: Event[]): Event[] {
   });
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 async function scrapePage(
   browser: Browser,
   country: string,
@@ -25,6 +38,8 @@ async function scrapePage(
   pageNum: number
 ): Promise<Event[]> {
   const page = await browser.newPage();
+
+  // -------------------------------------------------------------------------------
 
   // Block unwanted resources for speed
   await page.setRequestInterception(true);
@@ -37,13 +52,19 @@ async function scrapePage(
     }
   });
 
+  // -------------------------------------------------------------------------------
+
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
   );
 
+  // -------------------------------------------------------------------------------
+
   const url = `https://www.eventbrite.com.au/d/${encodeURIComponent(
     country
   )}--${encodeURIComponent(city)}/all-events/?page=${pageNum}`;
+
+  // -------------------------------------------------------------------------------
 
   try {
     const response = await page.goto(url, {
@@ -51,10 +72,14 @@ async function scrapePage(
       timeout: 30000,
     });
 
+    // -------------------------------------------------------------------------------
+
     if (!response || !response.ok()) {
       await page.close();
       return [];
     }
+
+    // -------------------------------------------------------------------------------
 
     try {
       await page.waitForSelector("li div.event-card", { timeout: 4000 });
@@ -62,6 +87,8 @@ async function scrapePage(
       await page.close();
       return [];
     }
+
+    // -------------------------------------------------------------------------------
 
     const events: Event[] = await page.evaluate(() => {
       const cards = Array.from(document.querySelectorAll("li div.event-card"));
@@ -94,16 +121,25 @@ async function scrapePage(
       });
     });
 
+    // -------------------------------------------------------------------------------
+
     await page.close();
+
+    // -------------------------------------------------------------------------------
+
     return events;
   } catch (error) {
-    console.log('====================================');
+    console.log("====================================");
     console.log(error);
-    console.log('====================================');
+    console.log("====================================");
     await page.close();
     return [];
   }
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
@@ -111,13 +147,19 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const city = searchParams.get("city")?.toLowerCase() ?? "sydney";
   const page = parseInt(searchParams.get("page") ?? "1");
 
+  // -------------------------------------------------------------------------------
+
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
+  // -------------------------------------------------------------------------------
+
   try {
     let pagesToScrape: number[] = [];
+
+    // -------------------------------------------------------------------------------
 
     if (page <= 5) {
       pagesToScrape = [1, 2, 3, 4, 5];
@@ -129,12 +171,20 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       scrapePage(browser, country, city, pageNum)
     );
 
+    // -------------------------------------------------------------------------------
+
     const results = await Promise.all(scrapePromises);
     const allEvents = results.flat();
 
+    // -------------------------------------------------------------------------------
+
     await browser.close();
 
+    // -------------------------------------------------------------------------------
+
     const uniqueEvents = deduplicate(allEvents);
+
+    // -------------------------------------------------------------------------------
 
     return NextResponse.json({ success: true, events: uniqueEvents });
   } catch (error) {

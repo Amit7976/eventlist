@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -8,12 +7,25 @@ import { z } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 const searchSchema = z.object({
     country: z.string().min(2, "Country is required"),
     city: z.string().min(2, "City is required"),
 });
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 type SearchInput = z.infer<typeof searchSchema>;
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 type Event = {
     title: string;
@@ -23,6 +35,10 @@ type Event = {
     location: string;
     price: string;
 };
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 interface SearchBarProps {
     setResult: (value: { events: Event[] }) => void;
@@ -34,10 +50,18 @@ interface SearchBarProps {
     setRsCountry: (val: string) => void;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 interface SearchInputForm {
     country: string;
     city: string;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function SearchBar({
     setResult,
@@ -48,8 +72,8 @@ function SearchBar({
     setRsCity,
     setRsCountry
 }: SearchBarProps) {
-    const [loading, setLoading] = useState<boolean>(false);
 
+    const [loading, setLoading] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
@@ -63,27 +87,51 @@ function SearchBar({
             city,
         },
     });
+    
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     // Watch for input changes and sync with parent state
     const watchedCountry: string = watch("country");
     const watchedCity: string = watch("city");
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     useEffect(() => {
         setCountry(watchedCountry);
     }, [watchedCountry, setCountry]);
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     useEffect(() => {
         setCity(watchedCity);
     }, [watchedCity, setCity]);
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     // Sync props to input fields if they change externally
     useEffect(() => {
         setValue("country", country);
     }, [country, setValue]);
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     useEffect(() => {
         setValue("city", city);
     }, [city, setValue]);
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 
     const onSubmit = async (data: SearchInputForm) => {
         setLoading(true);
@@ -95,9 +143,10 @@ function SearchBar({
             );
             const json = await res.json();
 
+            // -------------------------------------------------------------------------------
+
             setRsCountry(watchedCountry);
             setRsCity(watchedCity);
-
             setResult(json);
         } catch (error) {
             console.error("Fetch error:", error);
@@ -105,6 +154,10 @@ function SearchBar({
             setLoading(false);
         }
     };
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     return (
         <>

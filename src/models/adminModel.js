@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
 const Admin = mongoose.models?.admin || mongoose.model("admin", userSchema);
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export default Admin;

@@ -13,7 +13,6 @@ import { toast } from 'sonner';
 import { z } from "zod";
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,6 +29,9 @@ const FormSchema = z.object({
 function Footer() {
 
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,22 +40,24 @@ function Footer() {
   })
 
 
-
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   // POST SUBSCRIBER EMAIL WHEN SUBMIT THE FORM
-
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-    setLoading(true); // Set loading state to true when form submission starts
+    setLoading(true); 
 
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('email', formData.newsletter);
 
+      // -------------------------------------------------------------------------------
+
       const response = await axios.post('/api/newsletter', formDataToSend);
       const responseData = response.data;
 
+      // -------------------------------------------------------------------------------
+      
       if (responseData.success) {
         toast.success("Hurray🎉 You Subscribed Event Hub");
       } else {
@@ -61,19 +65,16 @@ function Footer() {
       }
     } catch (error) {
       const axiosError = error as AxiosError;
-
       if (axiosError.response && axiosError.response.status === 409) {
         toast("Submission Failed");
       } else {
         toast("An unexpected error occurred");
       }
-
       console.error('Error saving newsletter subscription:', axiosError);
     } finally {
       setLoading(false);
     }
   }
-
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +132,7 @@ function Footer() {
                   />
                   <Button
                     type="submit"
-                    className="bg-[#FC4C02] text-white rounded-full py-2 mt-2 w-fit h-10 disabled:opacity-90"
+                    className="bg-[#FC4C02] text-white hover:text-black rounded-full py-2 mt-2 w-fit h-10 disabled:opacity-90 cursor-pointer"
                     disabled={loading}
                   >
                     {loading ? (

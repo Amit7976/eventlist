@@ -8,6 +8,11 @@ import Map from '@/components/Map';
 import { useEffect, useRef, useState } from 'react';
 import MainContent from './MainContent';
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 type Event = {
   title: string;
   url: string;
@@ -17,24 +22,40 @@ type Event = {
   price: string;
 };
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function Page() {
   const [city, setCity] = useState("Sydney");
   const [result, setResult] = useState<{ events: Event[] }>({ events: [] });
   const [country, setCountry] = useState("Australia");
   const [rsCity, setRsCity] = useState("Sydney");
   const [rsCountry, setRsCountry] = useState("australia");
-
   const mainContentRef = useRef<HTMLDivElement>(null);
 
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
   useEffect(() => {
-    if (result && mainContentRef.current) {
+    if (
+      rsCity &&
+      result?.events &&
+      result.events.length > 0 &&
+      mainContentRef.current
+    ) {
       mainContentRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [result]);
+  }, [result, rsCity]);
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   return (
     <div className="bg-white dark:bg-neutral-900">
+
       <SplashCursor/>
       <Header position="sticky" />
 

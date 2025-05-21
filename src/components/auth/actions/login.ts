@@ -13,7 +13,6 @@ const credentialsLogin = async (email: string, password: string) => {
             email,
             password,
         });
-        
 
         return result;
     } catch (error) {

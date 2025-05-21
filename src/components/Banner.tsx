@@ -1,39 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import cities from '../../public/json/cities.json'
 
-const cities = [
-    {
-        title: "Sydney",
-        country: "Australia",
-        description: "Discover events in beautiful Sydney",
-        image: "/images/cities/sydney.jpg",
-    },
-    {
-        title: "Jaipur",
-        country: "India",
-        description: "Explore heritage and tech events in Jaipur",
-        image: "/images/cities/jaipur.webp",
-    },
-    {
-        title: "New York",
-        country: "NY",
-        description: "Attend top events in NYC",
-        image: "/images/cities/newYork.jpg",
-    },
-    {
-        title: "Mumbai",
-        country: "India",
-        description: "Join vibrant meetups in Mumbai",
-        image: "/images/cities/mumbai.webp",
-    },
-    {
-        title: "London",
-        country: "UK",
-        description: "What's happening in London?",
-        image: "/images/cities/london.jpeg",
-    },
-];
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 type Event = {
     title: string;
@@ -43,6 +15,11 @@ type Event = {
     location: string;
     price: string;
 };
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 interface BannerProps {
     setCity: (city: string) => void;
@@ -54,10 +31,19 @@ interface BannerProps {
     setRsCountry: (country: string) => void;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function Banner({ setCity, setCountry, setResult, setRsCity, setRsCountry }: BannerProps) {
+
     const [activeIndex, setActiveIndex] = useState(0);
     const [showOverlayIndex, setShowOverlayIndex] = useState(0);
     const [loading, setLoading] = useState(false);
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -65,6 +51,9 @@ function Banner({ setCity, setCountry, setResult, setRsCity, setRsCountry }: Ban
         }, 200);
         return () => clearTimeout(timer);
     }, [activeIndex]);
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     const handleClick = async ({ newCity, newCountry }: { newCity: string; newCountry: string }) => {
@@ -77,9 +66,10 @@ function Banner({ setCity, setCountry, setResult, setRsCity, setRsCountry }: Ban
             );
             const json = await res.json();
 
+            // -------------------------------------------------------------------------------
+
             setRsCountry(newCountry);
             setRsCity(newCity);
-
             setResult(json);
         } catch (error) {
             console.error("Fetch error:", error);
@@ -87,6 +77,10 @@ function Banner({ setCity, setCountry, setResult, setRsCity, setRsCountry }: Ban
             setLoading(false);
         }
     };
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     return (
         <>
@@ -97,7 +91,7 @@ function Banner({ setCity, setCountry, setResult, setRsCity, setRsCountry }: Ban
             ) : null}
             <div className="max-w-7xl rounded-3xl h-96 mx-auto mt-10 mb-40 flex gap-3">
                 <div className="flex gap-4 overflow-x-auto px-2 flex-nowrap lg:flex-rap overflow-y-scroll lg:overflow-y-auto">
-                    {cities.map((city, index) => {
+                    {cities.cities.map((city, index) => {
 
                         const isActive = activeIndex === index;
                         const showOverlay = showOverlayIndex === index && isActive;

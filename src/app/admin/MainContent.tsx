@@ -15,12 +15,18 @@ import { PiSignOutBold } from "react-icons/pi";
 function MainContent() {
    
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     const handleLogout = async () => {
         if (confirm("Are you sure you want to Logout this account!")) {
             await signOut({ redirect: false });
             window.location.replace('/admin/auth/login');
         }
     };
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     return (
@@ -35,7 +41,6 @@ function MainContent() {
                                         <h2 className="text-4xl font-bold text-black dark:text-white">Admin Penal</h2>
                                     </div>
                                     <div className="flex items-center mt-5 lg:mt-0 gap-x-10 gap-y-4 lg:gap-10 flex-wrap">
-
                                         <Button
                                             onClick={handleLogout}
                                             className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-md cursor-pointer bg-black backdrop-blur-lg px-6 py-2 h-10 text-base font-semibold text-white hover:text-black transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-md hover:shadow-gray-600/50 border border-white/20"
@@ -48,7 +53,6 @@ function MainContent() {
                                                 <div className="relative h-full w-10 bg-white/20"></div>
                                             </div>
                                         </Button>
-
                                         <ModeToggle />
                                     </div>
                                 </div>
@@ -70,9 +74,7 @@ function MainContent() {
                     </div>
                 </div>
             </div>
-
         </>
-
     )
 }
 

@@ -24,13 +24,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ position }) => {
 
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     return (
-        <header className={`flex flex-wrap md:justify-start md:flex-nowrap w-full ${position} top-0 z-50 transition-all duration-500 shadow-xl bg-white dark:bg-neutral-800 sm:py-2 lg:py-0"
-      }`}>
+        <header className={`flex flex-wrap md:justify-start md:flex-nowrap w-full ${position} top-0 z-50 transition-all duration-500 shadow-xl bg-white dark:bg-neutral-800 sm:py-2 lg:py-0`}>
             <nav className="relative w-full flex flex-wrap md:grid md:grid-cols-12 basis-full items-center pl-4 lg:py-1.5 md:px-20 mx-auto ">
                 <div className="md:col-span-3">
 

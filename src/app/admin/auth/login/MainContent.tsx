@@ -8,7 +8,6 @@ import Image from 'next/image'
 
 const MainContent = async () => {
 
-
     return (
         <>
             <section className='pt-16 px-5'>
@@ -35,7 +34,6 @@ const MainContent = async () => {
             <section className='w-full gap-6 my-5 p-5 pb-0 max-w-7xl mx-auto mb-20'>
                 <LoginForm />
             </section >
-
           
         </>
     )
